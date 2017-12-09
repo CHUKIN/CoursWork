@@ -17,32 +17,32 @@ namespace CoursWork.Controllers
         public AccountController(ApplicationContext context)
         {
             _context = context;
-            //DatabaseInitialize(); // добавляем пользователя и роли в бд
+            DatabaseInitialize(); // добавляем пользователя и роли в бд
         }
 
-        //private void DatabaseInitialize()
-        //{
-        //    if (!_context.Roles.Any())
-        //    {
-        //        string adminRoleName = "admin";
-        //        string userRoleName = "user";
+        private void DatabaseInitialize()
+        {
+           if (!_context.Roles.Any())
+           {
+               string adminRoleName = "admin";
+               string userRoleName = "user";
 
-        //        string adminEmail = "admin@mail.ru";
-        //        string adminPassword = "123456";
+               string adminEmail = "admin@mail.ru";
+               string adminPassword = "123456";
 
-        //        // добавляем роли
-        //        Role adminRole = new Role { Name = adminRoleName };
-        //        Role userRole = new Role { Name = userRoleName };
+               // добавляем роли
+               Role adminRole = new Role { Name = adminRoleName };
+               Role userRole = new Role { Name = userRoleName };
 
-        //        _context.Roles.Add(userRole);
-        //        _context.Roles.Add(adminRole);
+               _context.Roles.Add(userRole);
+               _context.Roles.Add(adminRole);
 
-        //        // добавляем администратора
-        //        _context.Users.Add(new User { Email = adminEmail, Password = adminPassword, Role = adminRole });
+               // добавляем администратора
+               _context.Users.Add(new User { Email = adminEmail, Password = adminPassword, Role = adminRole });
 
-        //        _context.SaveChanges();
-        //    }
-        //}
+               _context.SaveChanges();
+           }
+        }
         [HttpGet]
         public IActionResult Register()
         {
