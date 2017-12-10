@@ -1,26 +1,26 @@
 ﻿@model IEnumerable<CoursWork.Models.Course>
 
 @{
-    ViewData["Title"] = "AllCourse";
+    ViewData["Title"] = "Все курсы";
 }
 
-<h2>AllCourse</h2>
+<h2>Все курсы</h2>
 
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Название
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Dicription)
+                Описание
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.PhotoUrl)
-            </th>
+            </th>*@
             <th>
-                @Html.DisplayNameFor(model => model.Date)
+               Дата создания
             </th>
             <th></th>
         </tr>
@@ -35,9 +35,9 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Dicription)
                 </td>
-                <td>
+                @*<td>
                     @Html.DisplayFor(modelItem => item.PhotoUrl)
-                </td>
+                </td>*@
                 <td>
                     @Html.DisplayFor(modelItem => item.Date)
                 </td>
@@ -46,7 +46,7 @@
                     @{
                         var userCourse = item.UserCourses;
                         var FindUserCourse = item.UserCourses.FirstOrDefault(i => i.User.Login == User.Identity.Name);
-                        if (userCourse == null || FindUserCourse == null || FindUserCourse.Appointment==false)
+                        if (userCourse == null || FindUserCourse == null || FindUserCourse.Appointment == false)
                         {
                             <a asp-action="SubscribeCourse" asp-route-id="@item.Id">Записаться</a>
                         }

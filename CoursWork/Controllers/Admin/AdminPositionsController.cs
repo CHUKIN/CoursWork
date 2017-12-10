@@ -47,7 +47,7 @@ namespace CoursWork.Controllers.Admin
         // GET: AdminPositions/Create
         public IActionResult Create()
         {
-            ViewData["DepartamentId"] = new SelectList(_context.Departaments, "Id", "Id");
+            ViewData["DepartamentId"] = new SelectList(_context.Departaments, "Id", "Name");
             return View();
         }
 
@@ -64,7 +64,7 @@ namespace CoursWork.Controllers.Admin
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DepartamentId"] = new SelectList(_context.Departaments, "Id", "Id", position.DepartamentId);
+            ViewData["DepartamentId"] = new SelectList(_context.Departaments, "Id", "Name", position.DepartamentId);
             return View(position);
         }
 
@@ -81,7 +81,7 @@ namespace CoursWork.Controllers.Admin
             {
                 return NotFound();
             }
-            ViewData["DepartamentId"] = new SelectList(_context.Departaments, "Id", "Id", position.DepartamentId);
+            ViewData["DepartamentId"] = new SelectList(_context.Departaments, "Id", "Name", position.DepartamentId);
             return View(position);
         }
 
@@ -117,7 +117,7 @@ namespace CoursWork.Controllers.Admin
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DepartamentId"] = new SelectList(_context.Departaments, "Id", "Id", position.DepartamentId);
+            ViewData["DepartamentId"] = new SelectList(_context.Departaments, "Id", "Name", position.DepartamentId);
             return View(position);
         }
 

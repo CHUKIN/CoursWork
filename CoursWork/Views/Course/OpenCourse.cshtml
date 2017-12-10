@@ -1,10 +1,11 @@
 ﻿@model CoursWork.Models.Course
 
 @{
-    ViewData["Title"] = "OpenCourse";
+    ViewData["Title"] = "Курс";
 }
 
-<h2>OpenCourse</h2>
+<h2>Курс "@Model.Name"</h2>
+
 
 
 <div class="panel-group" id="collapse" role="tablist" aria-multiselectable="true">
@@ -15,13 +16,13 @@
                 <div class="panel-heading" role="tab" id="collapse-heading-@module.Id">
                     <h4 class="panel-title">
                         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#collapse" href="#collapse-@module.Id" aria-expanded="false" aria-controls="collapse-@module.Id">
-                            @module.Name
+                            Название: "@module.Name"
                         </a>
                     </h4>
                 </div>
                 <div id="collapse-@module.Id" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapse-heading-@module.Id">
                     <div class="panel-body">
-                        @module.Discription
+                        Описание: "@module.Discription"
                     </div>
                     @{
                         var totalCount = module.Tests.Count() + module.Theories.Count();
@@ -37,29 +38,49 @@
                                         var userTheory = theory.UserTheorys?.FirstOrDefault(i => i.User.Login == User.Identity.Name && i.Theory.Id == theory.Id);
                                         if (userTheory != null && userTheory.Finished == true)
                                         {
-                                            <div class="alert alert-warning alert-dismissible" role="alert">
-                                                <strong>Пройдено</strong>
+                                            <div class="alert alert-success alert-dismissible" role="alert">
+                                                <strong>@theory.Name</strong>
                                             </div>
 
                                         }
+                                        else
+                                        {
+                                            <div class="alert alert-warning alert-dismissible" role="alert">
+                                                <strong>@theory.Name</strong>
+                                            </div>
+
+
+                                        }
                                     }
-                                    @theory.Name
+
                                     <a asp-action="OpenTheory" asp-route-id="@theory.Id">Открыть теорию</a>
                                 </div>
                             }
                             else
                             {
                                 <div class="panel-body">
-                                    @{ 
+                                    @{
                                         var userTestResult = test.UserTestResulties?.FirstOrDefault();
-                                        if (userTestResult!=null && userTestResult.Finished == true)
-                                        { 
-                                            <div class="alert alert-warning alert-dismissible" role="alert">
-                                                <strong>Пройдено</strong>
+                                        if (userTestResult != null && userTestResult.Finished == true && userTestResult.TestResults.Correct == true)
+                                        {
+                                            <div class="alert alert-success alert-dismissible" role="alert">
+                                                <strong>@test.Name</strong>
                                             </div>
                                         }
+                                        else if (userTestResult != null && userTestResult.Finished == true && userTestResult.TestResults.Correct == false)
+                                        {
+                                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                                <strong>@test.Name</strong>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="alert alert-warning alert-dismissible" role="alert">
+                                                <strong>@test.Name</strong>
+                                            </div>
+
+                                        }
                                     }
-                                    @test.Name
                                     <a asp-action="OpenTest" asp-route-id="@test.Id">Открыть тест</a>
                                 </div>
 

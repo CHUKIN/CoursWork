@@ -48,8 +48,8 @@ namespace CoursWork.Controllers.Admin
         // GET: AdminUsers/Create
         public IActionResult Create()
         {
-            ViewData["PositionId"] = new SelectList(_context.Positions, "Id", "Id");
-            ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Id");
+            ViewData["PositionId"] = new SelectList(_context.Positions, "Id", "Name");
+            ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Name");
             return View();
         }
 
@@ -66,8 +66,8 @@ namespace CoursWork.Controllers.Admin
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PositionId"] = new SelectList(_context.Positions, "Id", "Id", user.PositionId);
-            ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Id", user.RoleId);
+            ViewData["PositionId"] = new SelectList(_context.Positions, "Id", "Name", user.PositionId);
+            ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Name", user.RoleId);
             return View(user);
         }
 
@@ -84,8 +84,8 @@ namespace CoursWork.Controllers.Admin
             {
                 return NotFound();
             }
-            ViewData["PositionId"] = new SelectList(_context.Positions, "Id", "Id", user.PositionId);
-            ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Id", user.RoleId);
+            ViewData["PositionId"] = new SelectList(_context.Positions, "Id", "Name", user.PositionId);
+            ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Name", user.RoleId);
             return View(user);
         }
 
@@ -121,8 +121,8 @@ namespace CoursWork.Controllers.Admin
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PositionId"] = new SelectList(_context.Positions, "Id", "Id", user.PositionId);
-            ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Id", user.RoleId);
+            ViewData["PositionId"] = new SelectList(_context.Positions, "Id", "Name", user.PositionId);
+            ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Name", user.RoleId);
             return View(user);
         }
 

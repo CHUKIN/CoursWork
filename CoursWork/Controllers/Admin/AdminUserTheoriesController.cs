@@ -48,8 +48,8 @@ namespace CoursWork.Controllers.Admin
         // GET: AdminUserTheories/Create
         public IActionResult Create()
         {
-            ViewData["TheoryId"] = new SelectList(_context.Theories, "Id", "Id");
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["TheoryId"] = new SelectList(_context.Theories, "Id", "Name");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Name");
             return View();
         }
 
@@ -66,8 +66,8 @@ namespace CoursWork.Controllers.Admin
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TheoryId"] = new SelectList(_context.Theories, "Id", "Id", userTheory.TheoryId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", userTheory.UserId);
+            ViewData["TheoryId"] = new SelectList(_context.Theories, "Id", "Name", userTheory.TheoryId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Name", userTheory.UserId);
             return View(userTheory);
         }
 
@@ -84,8 +84,8 @@ namespace CoursWork.Controllers.Admin
             {
                 return NotFound();
             }
-            ViewData["TheoryId"] = new SelectList(_context.Theories, "Id", "Id", userTheory.TheoryId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", userTheory.UserId);
+            ViewData["TheoryId"] = new SelectList(_context.Theories, "Id", "Name", userTheory.TheoryId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Name", userTheory.UserId);
             return View(userTheory);
         }
 
@@ -121,8 +121,8 @@ namespace CoursWork.Controllers.Admin
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TheoryId"] = new SelectList(_context.Theories, "Id", "Id", userTheory.TheoryId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", userTheory.UserId);
+            ViewData["TheoryId"] = new SelectList(_context.Theories, "Id", "Name", userTheory.TheoryId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Name", userTheory.UserId);
             return View(userTheory);
         }
 
