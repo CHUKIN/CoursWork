@@ -27,7 +27,7 @@ namespace CoursWork.Controllers
                string adminRoleName = "Admin";
                string userRoleName = "User";
 
-               string adminEmail = "admin@mail.ru";
+               string adminLogin = "admin";
                string adminPassword = "123456";
 
                // добавляем роли
@@ -38,7 +38,7 @@ namespace CoursWork.Controllers
                _context.Roles.Add(adminRole);
 
                // добавляем администратора
-               _context.Users.Add(new User { Email = adminEmail, Password = adminPassword, Role = adminRole });
+               _context.Users.Add(new User { Login = adminLogin, Password = adminPassword, Role = adminRole });
 
                _context.SaveChanges();
            }
@@ -54,11 +54,11 @@ namespace CoursWork.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = await _context.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
+                User user = await _context.Users.FirstOrDefaultAsync(u => u.Login == model.Login);
                 if (user == null)
                 {
                     // добавляем пользователя в бд
-                    user = new User { Email = model.Email, Password = model.Password };
+                    user = new User { Login = model.Login, Password = model.Password };
                     Role userRole = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "user");
                     if (userRole != null)
                         user.Role = userRole;
@@ -81,21 +81,20 @@ namespace CoursWork.Controllers
             return View();
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginModel model)
         {
             if (ModelState.IsValid)
             {
                 User user = await _context.Users
                     .Include(u => u.Role)
-                    .FirstOrDefaultAsync(u => u.Email == model.Email && u.Password == model.Password);
+                    .FirstOrDefaultAsync(u => u.Login == model.Login && u.Password == model.Password);
                 if (user != null)
                 {
                     await Authenticate(user); // аутентификация
 
                     return RedirectToAction("Index", "Home");
                 }
-                ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+                ModelState.AddModelError("Login", "Некорректные логин и(или) пароль");
             }
             return View(model);
         }
@@ -109,7 +108,7 @@ namespace CoursWork.Controllers
             // создаем один claim
             var claims = new List<Claim>
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
+                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Login),
                 new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role?.Name)
             };
             // создаем объект ClaimsIdentity

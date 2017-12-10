@@ -21,7 +21,8 @@ namespace CoursWork.Controllers.Admin
         // GET: AdminUsers
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Users.ToListAsync());
+            var applicationContext = _context.Users.Include(u => u.Position).Include(u => u.Role);
+            return View(await applicationContext.ToListAsync());
         }
 
         // GET: AdminUsers/Details/5
@@ -33,6 +34,8 @@ namespace CoursWork.Controllers.Admin
             }
 
             var user = await _context.Users
+                .Include(u => u.Position)
+                .Include(u => u.Role)
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (user == null)
             {
@@ -45,6 +48,8 @@ namespace CoursWork.Controllers.Admin
         // GET: AdminUsers/Create
         public IActionResult Create()
         {
+            ViewData["PositionId"] = new SelectList(_context.Positions, "Id", "Id");
+            ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Id");
             return View();
         }
 
@@ -53,7 +58,7 @@ namespace CoursWork.Controllers.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Email,Password,Name,Surname,Patroyomic,Gender,DateOfBirth")] User user)
+        public async Task<IActionResult> Create([Bind("Id,Login,Password,Name,Surname,Patroyomic,Gender,DateOfBirth,PositionId,RoleId")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -61,6 +66,8 @@ namespace CoursWork.Controllers.Admin
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["PositionId"] = new SelectList(_context.Positions, "Id", "Id", user.PositionId);
+            ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Id", user.RoleId);
             return View(user);
         }
 
@@ -77,6 +84,8 @@ namespace CoursWork.Controllers.Admin
             {
                 return NotFound();
             }
+            ViewData["PositionId"] = new SelectList(_context.Positions, "Id", "Id", user.PositionId);
+            ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Id", user.RoleId);
             return View(user);
         }
 
@@ -85,7 +94,7 @@ namespace CoursWork.Controllers.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Email,Password,Name,Surname,Patroyomic,Gender,DateOfBirth")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Login,Password,Name,Surname,Patroyomic,Gender,DateOfBirth,PositionId,RoleId")] User user)
         {
             if (id != user.Id)
             {
@@ -112,6 +121,8 @@ namespace CoursWork.Controllers.Admin
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["PositionId"] = new SelectList(_context.Positions, "Id", "Id", user.PositionId);
+            ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Id", user.RoleId);
             return View(user);
         }
 
@@ -124,6 +135,8 @@ namespace CoursWork.Controllers.Admin
             }
 
             var user = await _context.Users
+                .Include(u => u.Position)
+                .Include(u => u.Role)
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (user == null)
             {

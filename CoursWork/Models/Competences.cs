@@ -11,6 +11,7 @@ namespace CoursWork.Models
         public string Name { get; set; }
         public int Norm { get; set; }
 
+        public int PositionId { get; set; }
         public Position Position { get; set; }
     }
 }

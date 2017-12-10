@@ -7,14 +7,18 @@ namespace CoursWork.Models
 {
     public class UserTestResults
     {
-        public int IdUser { get; set; }
+        public int Id { get; set; }
+
+        public int UserId { get; set; }
         public User User { get; set; }
 
-        public int IdTestResults { get; set; }
+        public int TestResultsId { get; set; }
         public TestResults TestResults { get; set; }
 
-        public int IdTest { get; set; }
-        public Test Test { get; set; }
+        //public int TestId { get; set; }
+        //public Test Test { get; set; }
+
+        public int NumberOfTest { get; set; }
 
         public bool Finished { get; set; }
     }

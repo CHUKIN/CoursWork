@@ -10,8 +10,9 @@ namespace CoursWork.Models
         public int Id { get; set; }
         public string Variant { get; set; }
         public bool Correct { get; set; }
+        public int TestId { get; set; }
         public Test Test { get; set; }
 
-        public List<UserTestResults> UserTestResulties { get; set; }
+        public List<UserTestResults> UserTestResults { get; set; }
     }
 }

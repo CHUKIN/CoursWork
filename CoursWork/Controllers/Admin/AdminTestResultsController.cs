@@ -21,7 +21,8 @@ namespace CoursWork.Controllers.Admin
         // GET: AdminTestResults
         public async Task<IActionResult> Index()
         {
-            return View(await _context.TestResulties.ToListAsync());
+            var applicationContext = _context.TestResulties.Include(t => t.Test);
+            return View(await applicationContext.ToListAsync());
         }
 
         // GET: AdminTestResults/Details/5
@@ -33,6 +34,7 @@ namespace CoursWork.Controllers.Admin
             }
 
             var testResults = await _context.TestResulties
+                .Include(t => t.Test)
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (testResults == null)
             {
@@ -45,6 +47,7 @@ namespace CoursWork.Controllers.Admin
         // GET: AdminTestResults/Create
         public IActionResult Create()
         {
+            ViewData["TestId"] = new SelectList(_context.Tests, "Id", "Id");
             return View();
         }
 
@@ -53,7 +56,7 @@ namespace CoursWork.Controllers.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Variant,Correct")] TestResults testResults)
+        public async Task<IActionResult> Create([Bind("Id,Variant,Correct,TestId")] TestResults testResults)
         {
             if (ModelState.IsValid)
             {
@@ -61,6 +64,7 @@ namespace CoursWork.Controllers.Admin
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["TestId"] = new SelectList(_context.Tests, "Id", "Id", testResults.TestId);
             return View(testResults);
         }
 
@@ -77,6 +81,7 @@ namespace CoursWork.Controllers.Admin
             {
                 return NotFound();
             }
+            ViewData["TestId"] = new SelectList(_context.Tests, "Id", "Id", testResults.TestId);
             return View(testResults);
         }
 
@@ -85,7 +90,7 @@ namespace CoursWork.Controllers.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Variant,Correct")] TestResults testResults)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Variant,Correct,TestId")] TestResults testResults)
         {
             if (id != testResults.Id)
             {
@@ -112,6 +117,7 @@ namespace CoursWork.Controllers.Admin
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["TestId"] = new SelectList(_context.Tests, "Id", "Id", testResults.TestId);
             return View(testResults);
         }
 
@@ -124,6 +130,7 @@ namespace CoursWork.Controllers.Admin
             }
 
             var testResults = await _context.TestResulties
+                .Include(t => t.Test)
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (testResults == null)
             {

@@ -12,9 +12,22 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="IdUser" />
-            <input type="hidden" asp-for="IdTestResults" />
-            <input type="hidden" asp-for="IdTest" />
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="UserId" class="control-label"></label>
+                <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TestResultsId" class="control-label"></label>
+                <select asp-for="TestResultsId" class="form-control" asp-items="ViewBag.TestResultsId"></select>
+                <span asp-validation-for="TestResultsId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumberOfTest" class="control-label"></label>
+                <input asp-for="NumberOfTest" class="form-control" />
+                <span asp-validation-for="NumberOfTest" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <div class="checkbox">
                     <label>
