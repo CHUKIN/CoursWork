@@ -30,9 +30,18 @@ namespace CoursWork.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<UserCourse>().HasKey(u => new { u.IdUser, u.IdCouse });
-            modelBuilder.Entity<UserTheory>().HasKey(u => new { u.IdUser, u.IdTheory });
-            modelBuilder.Entity<UserTestResults>().HasKey(u => new { u.IdUser, u.IdTestResults, u.IdTest });
+            //modelBuilder.Entity<UserCourse>().HasKey(u => new { u.UserId, u.CourseId });
+            //  modelBuilder.Entity<UserTheory>().HasKey(u => new { u.UserId, u.TheoryId });
+            ////  modelBuilder.Entity<UserTestResults>().HasKey(u => new { u.UserId, u.TestResultsId, u.TestId });
+            //  modelBuilder.Entity<UserTestResults>().HasOne(s => s.User)
+            //.WithMany(s => s.UserTestResulties)
+            //.OnDelete(DeleteBehavior.ClientSetNull);
+            //  modelBuilder.Entity<UserTestResults>().HasOne(s => s.Test)
+            //.WithMany(s => s.UserTestResulties)
+            //.OnDelete(DeleteBehavior.ClientSetNull);
+          //  modelBuilder.Entity<UserTestResults>().HasOne(s => s.TestResults)
+          //.WithMany(s => s.UserTestResults)
+          //.OnDelete(DeleteBehavior.SetNull);
         }
 
         public DbSet<CoursWork.Models.UserTheory> UserTheory { get; set; }

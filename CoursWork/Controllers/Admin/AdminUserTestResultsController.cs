@@ -21,7 +21,8 @@ namespace CoursWork.Controllers.Admin
         // GET: AdminUserTestResults
         public async Task<IActionResult> Index()
         {
-            return View(await _context.UserTestResulties.ToListAsync());
+            var applicationContext = _context.UserTestResulties.Include(u => u.TestResults).Include(u => u.User);
+            return View(await applicationContext.ToListAsync());
         }
 
         // GET: AdminUserTestResults/Details/5
@@ -33,7 +34,9 @@ namespace CoursWork.Controllers.Admin
             }
 
             var userTestResults = await _context.UserTestResulties
-                .SingleOrDefaultAsync(m => m.IdUser == id);
+                .Include(u => u.TestResults)
+                .Include(u => u.User)
+                .SingleOrDefaultAsync(m => m.Id == id);
             if (userTestResults == null)
             {
                 return NotFound();
@@ -45,6 +48,8 @@ namespace CoursWork.Controllers.Admin
         // GET: AdminUserTestResults/Create
         public IActionResult Create()
         {
+            ViewData["TestResultsId"] = new SelectList(_context.TestResulties, "Id", "Id");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
@@ -53,7 +58,7 @@ namespace CoursWork.Controllers.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdUser,IdTestResults,IdTest,Finished")] UserTestResults userTestResults)
+        public async Task<IActionResult> Create([Bind("Id,UserId,TestResultsId,NumberOfTest,Finished")] UserTestResults userTestResults)
         {
             if (ModelState.IsValid)
             {
@@ -61,6 +66,8 @@ namespace CoursWork.Controllers.Admin
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["TestResultsId"] = new SelectList(_context.TestResulties, "Id", "Id", userTestResults.TestResultsId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", userTestResults.UserId);
             return View(userTestResults);
         }
 
@@ -72,11 +79,13 @@ namespace CoursWork.Controllers.Admin
                 return NotFound();
             }
 
-            var userTestResults = await _context.UserTestResulties.SingleOrDefaultAsync(m => m.IdUser == id);
+            var userTestResults = await _context.UserTestResulties.SingleOrDefaultAsync(m => m.Id == id);
             if (userTestResults == null)
             {
                 return NotFound();
             }
+            ViewData["TestResultsId"] = new SelectList(_context.TestResulties, "Id", "Id", userTestResults.TestResultsId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", userTestResults.UserId);
             return View(userTestResults);
         }
 
@@ -85,9 +94,9 @@ namespace CoursWork.Controllers.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdUser,IdTestResults,IdTest,Finished")] UserTestResults userTestResults)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,UserId,TestResultsId,NumberOfTest,Finished")] UserTestResults userTestResults)
         {
-            if (id != userTestResults.IdUser)
+            if (id != userTestResults.Id)
             {
                 return NotFound();
             }
@@ -101,7 +110,7 @@ namespace CoursWork.Controllers.Admin
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UserTestResultsExists(userTestResults.IdUser))
+                    if (!UserTestResultsExists(userTestResults.Id))
                     {
                         return NotFound();
                     }
@@ -112,6 +121,8 @@ namespace CoursWork.Controllers.Admin
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["TestResultsId"] = new SelectList(_context.TestResulties, "Id", "Id", userTestResults.TestResultsId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", userTestResults.UserId);
             return View(userTestResults);
         }
 
@@ -124,7 +135,9 @@ namespace CoursWork.Controllers.Admin
             }
 
             var userTestResults = await _context.UserTestResulties
-                .SingleOrDefaultAsync(m => m.IdUser == id);
+                .Include(u => u.TestResults)
+                .Include(u => u.User)
+                .SingleOrDefaultAsync(m => m.Id == id);
             if (userTestResults == null)
             {
                 return NotFound();
@@ -138,7 +151,7 @@ namespace CoursWork.Controllers.Admin
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var userTestResults = await _context.UserTestResulties.SingleOrDefaultAsync(m => m.IdUser == id);
+            var userTestResults = await _context.UserTestResulties.SingleOrDefaultAsync(m => m.Id == id);
             _context.UserTestResulties.Remove(userTestResults);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -146,7 +159,7 @@ namespace CoursWork.Controllers.Admin
 
         private bool UserTestResultsExists(int id)
         {
-            return _context.UserTestResulties.Any(e => e.IdUser == id);
+            return _context.UserTestResulties.Any(e => e.Id == id);
         }
     }
 }

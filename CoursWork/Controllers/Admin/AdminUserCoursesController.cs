@@ -21,7 +21,8 @@ namespace CoursWork.Controllers.Admin
         // GET: AdminUserCourses
         public async Task<IActionResult> Index()
         {
-            return View(await _context.UserCourses.ToListAsync());
+            var applicationContext = _context.UserCourses.Include(u => u.Course).Include(u => u.User);
+            return View(await applicationContext.ToListAsync());
         }
 
         // GET: AdminUserCourses/Details/5
@@ -33,7 +34,9 @@ namespace CoursWork.Controllers.Admin
             }
 
             var userCourse = await _context.UserCourses
-                .SingleOrDefaultAsync(m => m.IdUser == id);
+                .Include(u => u.Course)
+                .Include(u => u.User)
+                .SingleOrDefaultAsync(m => m.Id == id);
             if (userCourse == null)
             {
                 return NotFound();
@@ -45,6 +48,8 @@ namespace CoursWork.Controllers.Admin
         // GET: AdminUserCourses/Create
         public IActionResult Create()
         {
+            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Id");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
@@ -53,7 +58,7 @@ namespace CoursWork.Controllers.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdUser,IdCouse,Appointment,Finished,ResultPercent")] UserCourse userCourse)
+        public async Task<IActionResult> Create([Bind("Id,UserId,CourseId,Appointment,Finished,ResultPercent")] UserCourse userCourse)
         {
             if (ModelState.IsValid)
             {
@@ -61,6 +66,8 @@ namespace CoursWork.Controllers.Admin
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Id", userCourse.CourseId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", userCourse.UserId);
             return View(userCourse);
         }
 
@@ -72,11 +79,13 @@ namespace CoursWork.Controllers.Admin
                 return NotFound();
             }
 
-            var userCourse = await _context.UserCourses.SingleOrDefaultAsync(m => m.IdUser == id);
+            var userCourse = await _context.UserCourses.SingleOrDefaultAsync(m => m.Id == id);
             if (userCourse == null)
             {
                 return NotFound();
             }
+            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Id", userCourse.CourseId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", userCourse.UserId);
             return View(userCourse);
         }
 
@@ -85,9 +94,9 @@ namespace CoursWork.Controllers.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdUser,IdCouse,Appointment,Finished,ResultPercent")] UserCourse userCourse)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,UserId,CourseId,Appointment,Finished,ResultPercent")] UserCourse userCourse)
         {
-            if (id != userCourse.IdUser)
+            if (id != userCourse.Id)
             {
                 return NotFound();
             }
@@ -101,7 +110,7 @@ namespace CoursWork.Controllers.Admin
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UserCourseExists(userCourse.IdUser))
+                    if (!UserCourseExists(userCourse.Id))
                     {
                         return NotFound();
                     }
@@ -112,6 +121,8 @@ namespace CoursWork.Controllers.Admin
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Id", userCourse.CourseId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", userCourse.UserId);
             return View(userCourse);
         }
 
@@ -124,7 +135,9 @@ namespace CoursWork.Controllers.Admin
             }
 
             var userCourse = await _context.UserCourses
-                .SingleOrDefaultAsync(m => m.IdUser == id);
+                .Include(u => u.Course)
+                .Include(u => u.User)
+                .SingleOrDefaultAsync(m => m.Id == id);
             if (userCourse == null)
             {
                 return NotFound();
@@ -138,7 +151,7 @@ namespace CoursWork.Controllers.Admin
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var userCourse = await _context.UserCourses.SingleOrDefaultAsync(m => m.IdUser == id);
+            var userCourse = await _context.UserCourses.SingleOrDefaultAsync(m => m.Id == id);
             _context.UserCourses.Remove(userCourse);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -146,7 +159,7 @@ namespace CoursWork.Controllers.Admin
 
         private bool UserCourseExists(int id)
         {
-            return _context.UserCourses.Any(e => e.IdUser == id);
+            return _context.UserCourses.Any(e => e.Id == id);
         }
     }
 }

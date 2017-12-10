@@ -21,7 +21,8 @@ namespace CoursWork.Controllers.Admin
         // GET: AdminTheories
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Theories.ToListAsync());
+            var applicationContext = _context.Theories.Include(t => t.Module);
+            return View(await applicationContext.ToListAsync());
         }
 
         // GET: AdminTheories/Details/5
@@ -33,6 +34,7 @@ namespace CoursWork.Controllers.Admin
             }
 
             var theory = await _context.Theories
+                .Include(t => t.Module)
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (theory == null)
             {
@@ -45,6 +47,7 @@ namespace CoursWork.Controllers.Admin
         // GET: AdminTheories/Create
         public IActionResult Create()
         {
+            ViewData["ModuleId"] = new SelectList(_context.Modules, "Id", "Id");
             return View();
         }
 
@@ -53,7 +56,7 @@ namespace CoursWork.Controllers.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Text,StepNumber")] Theory theory)
+        public async Task<IActionResult> Create([Bind("Id,Name,Text,StepNumber,ModuleId")] Theory theory)
         {
             if (ModelState.IsValid)
             {
@@ -61,6 +64,7 @@ namespace CoursWork.Controllers.Admin
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ModuleId"] = new SelectList(_context.Modules, "Id", "Id", theory.ModuleId);
             return View(theory);
         }
 
@@ -77,6 +81,7 @@ namespace CoursWork.Controllers.Admin
             {
                 return NotFound();
             }
+            ViewData["ModuleId"] = new SelectList(_context.Modules, "Id", "Id", theory.ModuleId);
             return View(theory);
         }
 
@@ -85,7 +90,7 @@ namespace CoursWork.Controllers.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Text,StepNumber")] Theory theory)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Text,StepNumber,ModuleId")] Theory theory)
         {
             if (id != theory.Id)
             {
@@ -112,6 +117,7 @@ namespace CoursWork.Controllers.Admin
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ModuleId"] = new SelectList(_context.Modules, "Id", "Id", theory.ModuleId);
             return View(theory);
         }
 
@@ -124,6 +130,7 @@ namespace CoursWork.Controllers.Admin
             }
 
             var theory = await _context.Theories
+                .Include(t => t.Module)
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (theory == null)
             {

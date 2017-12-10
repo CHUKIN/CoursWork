@@ -7,10 +7,12 @@ namespace CoursWork.Models
 {
     public class UserTheory
     {
-        public int IdUser { get; set; }
+        public int Id { get; set; }
+
+        public int UserId { get; set; }
         public User User { get; set; }
 
-        public int IdTheory { get; set; }
+        public int TheoryId { get; set; }
         public Theory Theory { get; set; }
 
         public bool Finished { get; set; }

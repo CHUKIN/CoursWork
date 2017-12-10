@@ -27,7 +27,7 @@ namespace CoursWork.Controllers
                string adminRoleName = "Admin";
                string userRoleName = "User";
 
-               string adminEmail = "admin";
+               string adminLogin = "admin";
                string adminPassword = "123456";
 
                // добавляем роли
@@ -38,7 +38,7 @@ namespace CoursWork.Controllers
                _context.Roles.Add(adminRole);
 
                // добавляем администратора
-               _context.Users.Add(new User { Login = adminEmail, Password = adminPassword, Role = adminRole });
+               _context.Users.Add(new User { Login = adminLogin, Password = adminPassword, Role = adminRole });
 
                _context.SaveChanges();
            }

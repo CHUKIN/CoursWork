@@ -21,7 +21,8 @@ namespace CoursWork.Controllers.Admin
         // GET: AdminCompetences
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Competences.ToListAsync());
+            var applicationContext = _context.Competences.Include(c => c.Position);
+            return View(await applicationContext.ToListAsync());
         }
 
         // GET: AdminCompetences/Details/5
@@ -33,6 +34,7 @@ namespace CoursWork.Controllers.Admin
             }
 
             var competences = await _context.Competences
+                .Include(c => c.Position)
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (competences == null)
             {
@@ -45,6 +47,7 @@ namespace CoursWork.Controllers.Admin
         // GET: AdminCompetences/Create
         public IActionResult Create()
         {
+            ViewData["PositionId"] = new SelectList(_context.Positions, "Id", "Id");
             return View();
         }
 
@@ -53,7 +56,7 @@ namespace CoursWork.Controllers.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Norm")] Competences competences)
+        public async Task<IActionResult> Create([Bind("Id,Name,Norm,PositionId")] Competences competences)
         {
             if (ModelState.IsValid)
             {
@@ -61,6 +64,7 @@ namespace CoursWork.Controllers.Admin
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["PositionId"] = new SelectList(_context.Positions, "Id", "Id", competences.PositionId);
             return View(competences);
         }
 
@@ -77,6 +81,7 @@ namespace CoursWork.Controllers.Admin
             {
                 return NotFound();
             }
+            ViewData["PositionId"] = new SelectList(_context.Positions, "Id", "Id", competences.PositionId);
             return View(competences);
         }
 
@@ -85,7 +90,7 @@ namespace CoursWork.Controllers.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Norm")] Competences competences)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Norm,PositionId")] Competences competences)
         {
             if (id != competences.Id)
             {
@@ -112,6 +117,7 @@ namespace CoursWork.Controllers.Admin
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["PositionId"] = new SelectList(_context.Positions, "Id", "Id", competences.PositionId);
             return View(competences);
         }
 
@@ -124,6 +130,7 @@ namespace CoursWork.Controllers.Admin
             }
 
             var competences = await _context.Competences
+                .Include(c => c.Position)
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (competences == null)
             {

@@ -16,9 +16,21 @@
         <dd>
             @Html.DisplayFor(model => model.Finished)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Theory)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Theory.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.User)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.User.Id)
+        </dd>
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

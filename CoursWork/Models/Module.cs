@@ -10,7 +10,8 @@ namespace CoursWork.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Discription { get; set; }
-        public Course Cource { get; set; }
+        public int CourseId { get; set; }
+        public Course Course { get; set; }
         public List<Theory> Theories { get; set; }
         public List<Test> Tests { get; set; }
     }

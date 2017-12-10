@@ -8,7 +8,7 @@ namespace CoursWork.Models
 {
     public class RegisterModel
     {
-        [Required(ErrorMessage = "Не указан Email")]
+        [Required(ErrorMessage = "Не указан Login")]
         public string Login { get; set; }
 
         [Required(ErrorMessage = "Не указан пароль")]

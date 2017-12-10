@@ -1,0 +1,76 @@
+﻿@model CoursWork.Models.Course
+
+@{
+    ViewData["Title"] = "OpenCourse";
+}
+
+<h2>OpenCourse</h2>
+
+
+<div class="panel-group" id="collapse" role="tablist" aria-multiselectable="true">
+    @{
+        foreach (var module in Model.Modules)
+        {
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="collapse-heading-@module.Id">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#collapse" href="#collapse-@module.Id" aria-expanded="false" aria-controls="collapse-@module.Id">
+                            @module.Name
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapse-@module.Id" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapse-heading-@module.Id">
+                    <div class="panel-body">
+                        @module.Discription
+                    </div>
+                    @{
+                        var totalCount = module.Tests.Count() + module.Theories.Count();
+                        for (int index = 1; index <= totalCount; index++)
+                        {
+                            var test = module.Tests.FirstOrDefault(j => j.StepNumber == index);
+                            if (test == null)
+                            {
+                                var theory = module.Theories.FirstOrDefault(j => j.StepNumber == index);
+
+                                <div class="panel-body">
+                                    @{
+                                        var userTheory = theory.UserTheorys?.FirstOrDefault(i => i.User.Login == User.Identity.Name && i.Theory.Id == theory.Id);
+                                        if (userTheory != null && userTheory.Finished == true)
+                                        {
+                                            <div class="alert alert-warning alert-dismissible" role="alert">
+                                                <strong>Пройдено</strong>
+                                            </div>
+
+                                        }
+                                    }
+                                    @theory.Name
+                                    <a asp-action="OpenTheory" asp-route-id="@theory.Id">Открыть теорию</a>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="panel-body">
+                                    @{ 
+                                        var userTestResult = test.UserTestResulties?.FirstOrDefault();
+                                        if (userTestResult!=null && userTestResult.Finished == true)
+                                        { 
+                                            <div class="alert alert-warning alert-dismissible" role="alert">
+                                                <strong>Пройдено</strong>
+                                            </div>
+                                        }
+                                    }
+                                    @test.Name
+                                    <a asp-action="OpenTest" asp-route-id="@test.Id">Открыть тест</a>
+                                </div>
+
+                            }
+
+                        }
+                    }
+                </div>
+            </div>
+        }
+    }
+</div>
+
+

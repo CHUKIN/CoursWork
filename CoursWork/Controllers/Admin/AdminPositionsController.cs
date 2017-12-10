@@ -21,7 +21,8 @@ namespace CoursWork.Controllers.Admin
         // GET: AdminPositions
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Positions.ToListAsync());
+            var applicationContext = _context.Positions.Include(p => p.Departament);
+            return View(await applicationContext.ToListAsync());
         }
 
         // GET: AdminPositions/Details/5
@@ -33,6 +34,7 @@ namespace CoursWork.Controllers.Admin
             }
 
             var position = await _context.Positions
+                .Include(p => p.Departament)
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (position == null)
             {
@@ -45,6 +47,7 @@ namespace CoursWork.Controllers.Admin
         // GET: AdminPositions/Create
         public IActionResult Create()
         {
+            ViewData["DepartamentId"] = new SelectList(_context.Departaments, "Id", "Id");
             return View();
         }
 
@@ -53,7 +56,7 @@ namespace CoursWork.Controllers.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] Position position)
+        public async Task<IActionResult> Create([Bind("Id,Name,DepartamentId")] Position position)
         {
             if (ModelState.IsValid)
             {
@@ -61,6 +64,7 @@ namespace CoursWork.Controllers.Admin
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["DepartamentId"] = new SelectList(_context.Departaments, "Id", "Id", position.DepartamentId);
             return View(position);
         }
 
@@ -77,6 +81,7 @@ namespace CoursWork.Controllers.Admin
             {
                 return NotFound();
             }
+            ViewData["DepartamentId"] = new SelectList(_context.Departaments, "Id", "Id", position.DepartamentId);
             return View(position);
         }
 
@@ -85,7 +90,7 @@ namespace CoursWork.Controllers.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Position position)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,DepartamentId")] Position position)
         {
             if (id != position.Id)
             {
@@ -112,6 +117,7 @@ namespace CoursWork.Controllers.Admin
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["DepartamentId"] = new SelectList(_context.Departaments, "Id", "Id", position.DepartamentId);
             return View(position);
         }
 
@@ -124,6 +130,7 @@ namespace CoursWork.Controllers.Admin
             }
 
             var position = await _context.Positions
+                .Include(p => p.Departament)
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (position == null)
             {

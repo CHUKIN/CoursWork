@@ -12,17 +12,33 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.NumberOfTest)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumberOfTest)
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.Finished)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Finished)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TestResults)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TestResults.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.User)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.User.Id)
+        </dd>
     </dl>
     
     <form asp-action="Delete">
-        <input type="hidden" asp-for="IdUser" />
-        <input type="hidden" asp-for="IdTestResults" />
-        <input type="hidden" asp-for="IdTest" />
+        <input type="hidden" asp-for="Id" />
         <input type="submit" value="Delete" class="btn btn-default" /> |
         <a asp-action="Index">Back to List</a>
     </form>

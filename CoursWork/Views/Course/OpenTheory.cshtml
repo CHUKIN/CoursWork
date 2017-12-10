@@ -1,0 +1,13 @@
+﻿@model CoursWork.Models.Theory
+
+@{
+    ViewData["Title"] = "OpenTheory";
+}
+
+<h2>OpenTheory</h2>
+
+
+@Model.Text
+
+    <a asp-action="FinishTheory" asp-route-id="@Model.Id">Ознакомился</a> |
+

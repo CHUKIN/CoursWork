@@ -21,7 +21,8 @@ namespace CoursWork.Controllers.Admin
         // GET: AdminUserTheories
         public async Task<IActionResult> Index()
         {
-            return View(await _context.UserTheory.ToListAsync());
+            var applicationContext = _context.UserTheory.Include(u => u.Theory).Include(u => u.User);
+            return View(await applicationContext.ToListAsync());
         }
 
         // GET: AdminUserTheories/Details/5
@@ -33,7 +34,9 @@ namespace CoursWork.Controllers.Admin
             }
 
             var userTheory = await _context.UserTheory
-                .SingleOrDefaultAsync(m => m.IdUser == id);
+                .Include(u => u.Theory)
+                .Include(u => u.User)
+                .SingleOrDefaultAsync(m => m.Id == id);
             if (userTheory == null)
             {
                 return NotFound();
@@ -45,6 +48,8 @@ namespace CoursWork.Controllers.Admin
         // GET: AdminUserTheories/Create
         public IActionResult Create()
         {
+            ViewData["TheoryId"] = new SelectList(_context.Theories, "Id", "Id");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
@@ -53,7 +58,7 @@ namespace CoursWork.Controllers.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdUser,IdTheory,Finished")] UserTheory userTheory)
+        public async Task<IActionResult> Create([Bind("Id,UserId,TheoryId,Finished")] UserTheory userTheory)
         {
             if (ModelState.IsValid)
             {
@@ -61,6 +66,8 @@ namespace CoursWork.Controllers.Admin
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["TheoryId"] = new SelectList(_context.Theories, "Id", "Id", userTheory.TheoryId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", userTheory.UserId);
             return View(userTheory);
         }
 
@@ -72,11 +79,13 @@ namespace CoursWork.Controllers.Admin
                 return NotFound();
             }
 
-            var userTheory = await _context.UserTheory.SingleOrDefaultAsync(m => m.IdUser == id);
+            var userTheory = await _context.UserTheory.SingleOrDefaultAsync(m => m.Id == id);
             if (userTheory == null)
             {
                 return NotFound();
             }
+            ViewData["TheoryId"] = new SelectList(_context.Theories, "Id", "Id", userTheory.TheoryId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", userTheory.UserId);
             return View(userTheory);
         }
 
@@ -85,9 +94,9 @@ namespace CoursWork.Controllers.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdUser,IdTheory,Finished")] UserTheory userTheory)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,UserId,TheoryId,Finished")] UserTheory userTheory)
         {
-            if (id != userTheory.IdUser)
+            if (id != userTheory.Id)
             {
                 return NotFound();
             }
@@ -101,7 +110,7 @@ namespace CoursWork.Controllers.Admin
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UserTheoryExists(userTheory.IdUser))
+                    if (!UserTheoryExists(userTheory.Id))
                     {
                         return NotFound();
                     }
@@ -112,6 +121,8 @@ namespace CoursWork.Controllers.Admin
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["TheoryId"] = new SelectList(_context.Theories, "Id", "Id", userTheory.TheoryId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", userTheory.UserId);
             return View(userTheory);
         }
 
@@ -124,7 +135,9 @@ namespace CoursWork.Controllers.Admin
             }
 
             var userTheory = await _context.UserTheory
-                .SingleOrDefaultAsync(m => m.IdUser == id);
+                .Include(u => u.Theory)
+                .Include(u => u.User)
+                .SingleOrDefaultAsync(m => m.Id == id);
             if (userTheory == null)
             {
                 return NotFound();
@@ -138,7 +151,7 @@ namespace CoursWork.Controllers.Admin
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var userTheory = await _context.UserTheory.SingleOrDefaultAsync(m => m.IdUser == id);
+            var userTheory = await _context.UserTheory.SingleOrDefaultAsync(m => m.Id == id);
             _context.UserTheory.Remove(userTheory);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -146,7 +159,7 @@ namespace CoursWork.Controllers.Admin
 
         private bool UserTheoryExists(int id)
         {
-            return _context.UserTheory.Any(e => e.IdUser == id);
+            return _context.UserTheory.Any(e => e.Id == id);
         }
     }
 }

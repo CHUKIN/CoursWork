@@ -32,6 +32,10 @@
                         {
                             <li><a asp-area="" asp-controller="AdminMenu" asp-action="Index">AdminMenu</a></li>
                         }
+                        if (User.IsInRole("Competency"))
+                        {
+                            <li><a asp-area="" asp-controller="Estemation" asp-action="Index">CompetencyMenu</a></li>
+                        }
                     }
                 </ul>
                 <form class="nav navbar-nav navbar-right navbar-form">
@@ -42,8 +46,8 @@
                             </button>
                             <ul class="dropdown-menu" role="menu">
                                 <li>@Html.ActionLink("Профиль", "", "Home")</li>
-                                <li>@Html.ActionLink("Мои курсы", "", "Home")</li>
-                                <li>@Html.ActionLink("Все курсы", "", "Home")</li>
+                                <li>@Html.ActionLink("Мои курсы", "MyCourse", "Course")</li>
+                                <li>@Html.ActionLink("Все курсы", "AllCourse", "Course")</li>
                             </ul>
                         </div>
                         <div class="form-group">

@@ -21,7 +21,8 @@ namespace CoursWork.Controllers.Admin
         // GET: AdminKpiResults
         public async Task<IActionResult> Index()
         {
-            return View(await _context.KpiResults.ToListAsync());
+            var applicationContext = _context.KpiResults.Include(k => k.User);
+            return View(await applicationContext.ToListAsync());
         }
 
         // GET: AdminKpiResults/Details/5
@@ -33,6 +34,7 @@ namespace CoursWork.Controllers.Admin
             }
 
             var kpiResult = await _context.KpiResults
+                .Include(k => k.User)
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (kpiResult == null)
             {
@@ -45,6 +47,7 @@ namespace CoursWork.Controllers.Admin
         // GET: AdminKpiResults/Create
         public IActionResult Create()
         {
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
@@ -53,7 +56,7 @@ namespace CoursWork.Controllers.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Date,Result,Comment")] KpiResult kpiResult)
+        public async Task<IActionResult> Create([Bind("Id,Date,Result,UserId,Comment")] KpiResult kpiResult)
         {
             if (ModelState.IsValid)
             {
@@ -61,6 +64,7 @@ namespace CoursWork.Controllers.Admin
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", kpiResult.UserId);
             return View(kpiResult);
         }
 
@@ -77,6 +81,7 @@ namespace CoursWork.Controllers.Admin
             {
                 return NotFound();
             }
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", kpiResult.UserId);
             return View(kpiResult);
         }
 
@@ -85,7 +90,7 @@ namespace CoursWork.Controllers.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Date,Result,Comment")] KpiResult kpiResult)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Date,Result,UserId,Comment")] KpiResult kpiResult)
         {
             if (id != kpiResult.Id)
             {
@@ -112,6 +117,7 @@ namespace CoursWork.Controllers.Admin
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", kpiResult.UserId);
             return View(kpiResult);
         }
 
@@ -124,6 +130,7 @@ namespace CoursWork.Controllers.Admin
             }
 
             var kpiResult = await _context.KpiResults
+                .Include(k => k.User)
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (kpiResult == null)
             {
