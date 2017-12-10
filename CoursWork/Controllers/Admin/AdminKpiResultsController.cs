@@ -47,7 +47,7 @@ namespace CoursWork.Controllers.Admin
         // GET: AdminKpiResults/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Name");
             return View();
         }
 
@@ -64,7 +64,7 @@ namespace CoursWork.Controllers.Admin
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", kpiResult.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Name", kpiResult.UserId);
             return View(kpiResult);
         }
 
@@ -81,7 +81,7 @@ namespace CoursWork.Controllers.Admin
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", kpiResult.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Name", kpiResult.UserId);
             return View(kpiResult);
         }
 
@@ -117,7 +117,7 @@ namespace CoursWork.Controllers.Admin
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", kpiResult.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Name", kpiResult.UserId);
             return View(kpiResult);
         }
 

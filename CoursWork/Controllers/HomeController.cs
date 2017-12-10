@@ -31,6 +31,13 @@ namespace CoursWork.Controllers
             return View();
         }
         
+        public IActionResult Profile()
+        {
+            var user = db.Users.FirstOrDefault(i => i.Login == User.Identity.Name);
+            db.Entry(user).Reference(i => i.Position).Load();
+            db.Entry(user).Reference(i => i.Role).Load();
+            return View(user);
+        }
         
     }
 }

@@ -47,7 +47,7 @@ namespace CoursWork.Controllers.Admin
         // GET: AdminModules/Create
         public IActionResult Create()
         {
-            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Id");
+            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Name");
             return View();
         }
 
@@ -64,7 +64,7 @@ namespace CoursWork.Controllers.Admin
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Id", @module.CourseId);
+            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Name", @module.CourseId);
             return View(@module);
         }
 
@@ -81,7 +81,7 @@ namespace CoursWork.Controllers.Admin
             {
                 return NotFound();
             }
-            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Id", @module.CourseId);
+            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Name", @module.CourseId);
             return View(@module);
         }
 
@@ -117,7 +117,7 @@ namespace CoursWork.Controllers.Admin
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Id", @module.CourseId);
+            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Name", @module.CourseId);
             return View(@module);
         }
 

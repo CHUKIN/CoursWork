@@ -48,8 +48,8 @@ namespace CoursWork.Controllers.Admin
         // GET: AdminUserCourses/Create
         public IActionResult Create()
         {
-            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Id");
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Name");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Name");
             return View();
         }
 
@@ -66,8 +66,8 @@ namespace CoursWork.Controllers.Admin
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Id", userCourse.CourseId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", userCourse.UserId);
+            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Name", userCourse.CourseId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Name", userCourse.UserId);
             return View(userCourse);
         }
 
@@ -84,8 +84,8 @@ namespace CoursWork.Controllers.Admin
             {
                 return NotFound();
             }
-            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Id", userCourse.CourseId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", userCourse.UserId);
+            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Name", userCourse.CourseId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Name", userCourse.UserId);
             return View(userCourse);
         }
 
@@ -121,8 +121,8 @@ namespace CoursWork.Controllers.Admin
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Id", userCourse.CourseId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", userCourse.UserId);
+            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Name", userCourse.CourseId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Name", userCourse.UserId);
             return View(userCourse);
         }
 

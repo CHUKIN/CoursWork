@@ -22,19 +22,18 @@
     <nav class="navbar navbar-fixed-top navbar-inverse">
         <div class="container">
             <div class="navbar-header">
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">MvcApplication</a>
+                <a asp-area="" asp-controller="Course" asp-action="AllCourse" class="navbar-brand">Обучалочка</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     @{
                         if (User.IsInRole("Admin"))
                         {
-                            <li><a asp-area="" asp-controller="AdminMenu" asp-action="Index">AdminMenu</a></li>
+                            <li><a asp-area="" asp-controller="AdminMenu" asp-action="Index">Меню администраора</a></li>
                         }
                         if (User.IsInRole("Competency"))
                         {
-                            <li><a asp-area="" asp-controller="Estemation" asp-action="Index">CompetencyMenu</a></li>
+                            <li><a asp-area="" asp-controller="Estemation" asp-action="Index">Меню компетенций</a></li>
                         }
                     }
                 </ul>
@@ -45,7 +44,7 @@
                                 <span class="glyphicon glyphicon-user"></span> <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
-                                <li>@Html.ActionLink("Профиль", "", "Home")</li>
+                                <li>@Html.ActionLink("Профиль", "Profile", "Home")</li>
                                 <li>@Html.ActionLink("Мои курсы", "MyCourse", "Course")</li>
                                 <li>@Html.ActionLink("Все курсы", "AllCourse", "Course")</li>
                             </ul>

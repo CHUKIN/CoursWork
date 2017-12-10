@@ -47,7 +47,7 @@ namespace CoursWork.Controllers.Admin
         // GET: AdminTestResults/Create
         public IActionResult Create()
         {
-            ViewData["TestId"] = new SelectList(_context.Tests, "Id", "Id");
+            ViewData["TestId"] = new SelectList(_context.Tests, "Id", "Name");
             return View();
         }
 
@@ -64,7 +64,7 @@ namespace CoursWork.Controllers.Admin
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TestId"] = new SelectList(_context.Tests, "Id", "Id", testResults.TestId);
+            ViewData["TestId"] = new SelectList(_context.Tests, "Id", "Name", testResults.TestId);
             return View(testResults);
         }
 
@@ -81,7 +81,7 @@ namespace CoursWork.Controllers.Admin
             {
                 return NotFound();
             }
-            ViewData["TestId"] = new SelectList(_context.Tests, "Id", "Id", testResults.TestId);
+            ViewData["TestId"] = new SelectList(_context.Tests, "Id", "Name", testResults.TestId);
             return View(testResults);
         }
 
@@ -117,7 +117,7 @@ namespace CoursWork.Controllers.Admin
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TestId"] = new SelectList(_context.Tests, "Id", "Id", testResults.TestId);
+            ViewData["TestId"] = new SelectList(_context.Tests, "Id", "Name", testResults.TestId);
             return View(testResults);
         }
 

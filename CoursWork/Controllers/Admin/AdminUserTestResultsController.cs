@@ -48,8 +48,8 @@ namespace CoursWork.Controllers.Admin
         // GET: AdminUserTestResults/Create
         public IActionResult Create()
         {
-            ViewData["TestResultsId"] = new SelectList(_context.TestResulties, "Id", "Id");
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["TestResultsId"] = new SelectList(_context.TestResulties, "Id", "Variant");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Name");
             return View();
         }
 
@@ -66,8 +66,8 @@ namespace CoursWork.Controllers.Admin
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TestResultsId"] = new SelectList(_context.TestResulties, "Id", "Id", userTestResults.TestResultsId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", userTestResults.UserId);
+            ViewData["TestResultsId"] = new SelectList(_context.TestResulties, "Id", "Variant", userTestResults.TestResultsId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Name", userTestResults.UserId);
             return View(userTestResults);
         }
 
@@ -84,8 +84,8 @@ namespace CoursWork.Controllers.Admin
             {
                 return NotFound();
             }
-            ViewData["TestResultsId"] = new SelectList(_context.TestResulties, "Id", "Id", userTestResults.TestResultsId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", userTestResults.UserId);
+            ViewData["TestResultsId"] = new SelectList(_context.TestResulties, "Id", "Variant", userTestResults.TestResultsId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Name", userTestResults.UserId);
             return View(userTestResults);
         }
 
@@ -121,8 +121,8 @@ namespace CoursWork.Controllers.Admin
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TestResultsId"] = new SelectList(_context.TestResulties, "Id", "Id", userTestResults.TestResultsId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", userTestResults.UserId);
+            ViewData["TestResultsId"] = new SelectList(_context.TestResulties, "Id", "Variant", userTestResults.TestResultsId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Name", userTestResults.UserId);
             return View(userTestResults);
         }
 

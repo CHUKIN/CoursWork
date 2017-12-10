@@ -1,26 +1,26 @@
 ﻿@model IEnumerable<CoursWork.Models.Course>
 
 @{
-    ViewData["Title"] = "MyCourse";
+    ViewData["Title"] = "Мои курсы";
 }
 
-<h2>MyCourse</h2>
+<h2>Мои курсы</h2>
 
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Название
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Dicription)
+                Описание
             </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.PhotoUrl)
+                </th>*@
             <th>
-                @Html.DisplayNameFor(model => model.PhotoUrl)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Date)
+                Дата создания
             </th>
             <th></th>
         </tr>
@@ -35,9 +35,9 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Dicription)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PhotoUrl)
-                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.PhotoUrl)
+                    </td>*@
                 <td>
                     @Html.DisplayFor(modelItem => item.Date)
                 </td>

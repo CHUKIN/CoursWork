@@ -98,7 +98,7 @@ namespace CoursWork.Controllers
                 {
                     await Authenticate(user); // аутентификация
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("AllCourse", "Course");
                 }
                 ModelState.AddModelError("Login", "Некорректные логин и(или) пароль");
             }
