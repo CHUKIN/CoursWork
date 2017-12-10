@@ -1,85 +1,63 @@
-@{
-   
+﻿@{
+
     Layout = null;
-    
+
     ViewData["Title"] = "Авторизация";
 }
+
+@model CoursWork.Models.LoginModel
 
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta charset="utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewData["Title"]</title>
-    
+
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
-    
+
 </head>
 <body>
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <br>
-            <h2 class="text-center">Авторизация</h2>
-            <br>
-            <div class="col-md-3"></div>
-
-            <form class="form-horizontal col-md-6" method="post" action="">
-                <div class="form-group">
-@*                    <div class="col-md-2"></div>*@
-@*                    <label class="col-md-3">Логин</label>*@
-@*                    <input type="text" class="form-control col-md-3" name="Login" required>*@
-                    @*                    <div class="col-md-3"></div>*@
-                    
-                    <label for="login" class="col-md-3 control-label">Логин</label>
-                    <div class="col-md-6">
-                        <input type="email" class="form-control" id="login" placeholder="Логин">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <br>
+                <h2 class="text-center">Авторизация</h2>
+                <br>
+                <div class="col-md-3"></div>
+                <form asp-action="Login" asp-controller="Account" class="form-horizontal col-md-6" method="post" asp-anti-forgery="true">
+                    <div class="form-group">
+                        <label for="login" class="col-md-3 control-label">Логин</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="login" name="login" placeholder="Логин">
+                            @Html.ValidationMessageFor(i => i.Login)
+                        </div>
+                        <div class="col-md-3"></div>
                     </div>
-                    <div class="col-md-3"></div>
-                </div>
-
-                <div class="form-group">
-@*                    <div class="col-md-2"></div>*@
-@*                    <label class="col-md-3">Пароль</label>*@
-@*                    <input type="password" class="form-control col-md-3" name="Password" required>*@
-                    @*                    <div class="col-md-3"></div>*@
-                    
-                    <label for="password" class="col-md-3 control-label">Пароль</label>
-                    <div class="col-md-6">
-                        <input type="email" class="form-control" id="password" placeholder="Пароль">
+                    <div class="form-group">
+                        <label for="password" class="col-md-3 control-label">Пароль</label>
+                        <div class="col-md-6">
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Пароль">
+                            @Html.ValidationMessageFor(i => i.Password)
+                        </div>
+                        <div class="col-md-3"></div>
                     </div>
-                    <div class="col-md-3"></div>                 
 
-                </div>
-
-                <div class="form-group">
-@*                    <div class="col-md-2"></div>*@
-@*                    <div class="col-md-offset-3 col-md-3">*@
-@*                        <button type="submit" class="btn btn-default">Войти</button>*@
-@*                    </div>*@
-                    @*                    <div class="col-md-3"></div>*@
-                    
-                    <div class="col-sm-offset-5 col-sm-2">
-                        <button type="submit" class="btn btn-default">Войти</button>
+                    <div class="form-group">
+                        <div class="col-sm-offset-5 col-sm-2">
+                            <button type="submit" class="btn btn-default">Войти</button>
+                        </div>
+                        <div class="col-md-5"></div>
                     </div>
-                    <div class="col-md-5"></div> 
-                </div>
-            </form>
-            <div class="col-md-3"></div>
+                </form>
+                <div class="col-md-3"></div>
 
+            </div>
         </div>
     </div>
-</div>
-
-@*@RenderSection("Scripts", required: false)*@
-
-
-@*@Scripts.Render("~/bundles/jquery")*@
-@*@Scripts.Render("~/bundles/bootstrap")*@
-
 </body>
 </html>

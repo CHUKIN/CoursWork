@@ -10,6 +10,7 @@ using System.Security.Claims;
 
 namespace CoursWork.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private ApplicationContext db;
