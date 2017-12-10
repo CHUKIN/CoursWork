@@ -11,9 +11,10 @@ using System;
 namespace CoursWork.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20171210094338_someEntyties")]
+    partial class someEntyties
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -255,19 +256,13 @@ namespace CoursWork.Migrations
 
                     b.Property<int>("IdTestResults");
 
-                    b.Property<int>("IdTest");
-
                     b.Property<bool>("Finished");
-
-                    b.Property<int?>("TestId");
 
                     b.Property<int?>("TestResultsId");
 
                     b.Property<int?>("UserId");
 
-                    b.HasKey("IdUser", "IdTestResults", "IdTest");
-
-                    b.HasIndex("TestId");
+                    b.HasKey("IdUser", "IdTestResults");
 
                     b.HasIndex("TestResultsId");
 
@@ -370,10 +365,6 @@ namespace CoursWork.Migrations
 
             modelBuilder.Entity("CoursWork.Models.UserTestResults", b =>
                 {
-                    b.HasOne("CoursWork.Models.Test", "Test")
-                        .WithMany()
-                        .HasForeignKey("TestId");
-
                     b.HasOne("CoursWork.Models.TestResults", "TestResults")
                         .WithMany("UserTestResulties")
                         .HasForeignKey("TestResultsId");

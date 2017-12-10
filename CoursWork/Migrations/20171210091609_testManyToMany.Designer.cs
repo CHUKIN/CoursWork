@@ -11,9 +11,10 @@ using System;
 namespace CoursWork.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20171210091609_testManyToMany")]
+    partial class testManyToMany
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -88,24 +89,6 @@ namespace CoursWork.Migrations
                     b.ToTable("KpiResults");
                 });
 
-            modelBuilder.Entity("CoursWork.Models.Module", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int?>("CourceId");
-
-                    b.Property<string>("Discription");
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourceId");
-
-                    b.ToTable("Modules");
-                });
-
             modelBuilder.Entity("CoursWork.Models.Position", b =>
                 {
                     b.Property<int>("Id")
@@ -132,64 +115,6 @@ namespace CoursWork.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
-                });
-
-            modelBuilder.Entity("CoursWork.Models.Test", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int?>("ModuleId");
-
-                    b.Property<string>("Name");
-
-                    b.Property<string>("Question");
-
-                    b.Property<int>("StepNumber");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ModuleId");
-
-                    b.ToTable("Tests");
-                });
-
-            modelBuilder.Entity("CoursWork.Models.TestResults", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<bool>("Correct");
-
-                    b.Property<int?>("TestId");
-
-                    b.Property<string>("Variant");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TestId");
-
-                    b.ToTable("TestResulties");
-                });
-
-            modelBuilder.Entity("CoursWork.Models.Theory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int?>("ModuleId");
-
-                    b.Property<string>("Name");
-
-                    b.Property<int>("StepNumber");
-
-                    b.Property<string>("Text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ModuleId");
-
-                    b.ToTable("Theories");
                 });
 
             modelBuilder.Entity("CoursWork.Models.User", b =>
@@ -236,8 +161,6 @@ namespace CoursWork.Migrations
 
                     b.Property<bool>("Finished");
 
-                    b.Property<decimal>("ResultPercent");
-
                     b.Property<int?>("UserId");
 
                     b.HasKey("IdUser", "IdCouse");
@@ -247,54 +170,6 @@ namespace CoursWork.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserCourses");
-                });
-
-            modelBuilder.Entity("CoursWork.Models.UserTestResults", b =>
-                {
-                    b.Property<int>("IdUser");
-
-                    b.Property<int>("IdTestResults");
-
-                    b.Property<int>("IdTest");
-
-                    b.Property<bool>("Finished");
-
-                    b.Property<int?>("TestId");
-
-                    b.Property<int?>("TestResultsId");
-
-                    b.Property<int?>("UserId");
-
-                    b.HasKey("IdUser", "IdTestResults", "IdTest");
-
-                    b.HasIndex("TestId");
-
-                    b.HasIndex("TestResultsId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserTestResulties");
-                });
-
-            modelBuilder.Entity("CoursWork.Models.UserTheory", b =>
-                {
-                    b.Property<int>("IdUser");
-
-                    b.Property<int>("IdTheory");
-
-                    b.Property<bool>("Finished");
-
-                    b.Property<int?>("TheoryId");
-
-                    b.Property<int?>("UserId");
-
-                    b.HasKey("IdUser", "IdTheory");
-
-                    b.HasIndex("TheoryId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserTheory");
                 });
 
             modelBuilder.Entity("CoursWork.Models.Competences", b =>
@@ -311,39 +186,11 @@ namespace CoursWork.Migrations
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("CoursWork.Models.Module", b =>
-                {
-                    b.HasOne("CoursWork.Models.Course", "Cource")
-                        .WithMany("Modules")
-                        .HasForeignKey("CourceId");
-                });
-
             modelBuilder.Entity("CoursWork.Models.Position", b =>
                 {
                     b.HasOne("CoursWork.Models.Departament", "Departament")
                         .WithMany("Positions")
                         .HasForeignKey("DepartamentId");
-                });
-
-            modelBuilder.Entity("CoursWork.Models.Test", b =>
-                {
-                    b.HasOne("CoursWork.Models.Module", "Module")
-                        .WithMany("Tests")
-                        .HasForeignKey("ModuleId");
-                });
-
-            modelBuilder.Entity("CoursWork.Models.TestResults", b =>
-                {
-                    b.HasOne("CoursWork.Models.Test", "Test")
-                        .WithMany("TestResulties")
-                        .HasForeignKey("TestId");
-                });
-
-            modelBuilder.Entity("CoursWork.Models.Theory", b =>
-                {
-                    b.HasOne("CoursWork.Models.Module")
-                        .WithMany("Theories")
-                        .HasForeignKey("ModuleId");
                 });
 
             modelBuilder.Entity("CoursWork.Models.User", b =>
@@ -360,37 +207,11 @@ namespace CoursWork.Migrations
             modelBuilder.Entity("CoursWork.Models.UserCourse", b =>
                 {
                     b.HasOne("CoursWork.Models.Course", "Course")
-                        .WithMany("UserCourses")
+                        .WithMany()
                         .HasForeignKey("CourseId");
 
                     b.HasOne("CoursWork.Models.User", "User")
-                        .WithMany("UserCourses")
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("CoursWork.Models.UserTestResults", b =>
-                {
-                    b.HasOne("CoursWork.Models.Test", "Test")
                         .WithMany()
-                        .HasForeignKey("TestId");
-
-                    b.HasOne("CoursWork.Models.TestResults", "TestResults")
-                        .WithMany("UserTestResulties")
-                        .HasForeignKey("TestResultsId");
-
-                    b.HasOne("CoursWork.Models.User", "User")
-                        .WithMany("UserTestResulties")
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("CoursWork.Models.UserTheory", b =>
-                {
-                    b.HasOne("CoursWork.Models.Theory", "Theory")
-                        .WithMany("UserTheorys")
-                        .HasForeignKey("TheoryId");
-
-                    b.HasOne("CoursWork.Models.User", "User")
-                        .WithMany("UserTheorys")
                         .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618

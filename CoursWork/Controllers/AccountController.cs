@@ -17,15 +17,15 @@ namespace CoursWork.Controllers
         public AccountController(ApplicationContext context)
         {
             _context = context;
-            DatabaseInitialize(); // добавляем пользователя и роли в бд
+            //DatabaseInitialize(); // добавляем пользователя и роли в бд
         }
 
         private void DatabaseInitialize()
         {
            if (!_context.Roles.Any())
            {
-               string adminRoleName = "admin";
-               string userRoleName = "user";
+               string adminRoleName = "Admin";
+               string userRoleName = "User";
 
                string adminEmail = "admin@mail.ru";
                string adminPassword = "123456";

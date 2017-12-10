@@ -12,18 +12,21 @@ namespace CoursWork.Controllers
 {
     public class HomeController : Controller
     {
-        [Authorize(Roles = "admin, user")]
+        private ApplicationContext db;
+        public HomeController(ApplicationContext context)
+        {
+            db = context;
+        }
+
         public IActionResult Index()
         {
             //string role = User.FindFirst(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value;
             //return Content($"ваша роль: {role}");
             return View();
         }
-        [Authorize(Roles = "admin")]
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
-
             return View();
         }
     }

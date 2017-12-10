@@ -5,10 +5,13 @@ using System.Threading.Tasks;
 
 namespace CoursWork.Models
 {
-    public class Role
+    public class Module
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public List<User> Users { get; set; }
+        public string Discription { get; set; }
+        public Course Cource { get; set; }
+        public List<Theory> Theories { get; set; }
+        public List<Test> Tests { get; set; }
     }
 }
