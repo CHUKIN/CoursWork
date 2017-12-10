@@ -1,0 +1,92 @@
+@{
+    ViewData["Title"] = "Курс";
+}
+<h2>@ViewData["Title"]</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="text-center">
+                <h2>Heading</h2>
+                <img class="img-rounded" data-src="holder.js/140x140" alt="140x140 picture" src="" style="width: 140px; height: 140px;">
+                <p>Description </p>
+                <form>
+                    <button type="button" class="btn btn-primary">Записаться на курс</button>
+                </form>
+            </div>
+            <br/>
+
+
+            @*            @{*@
+            @*                foreach (var category in Model.Categorys.Where(i => i.Name != "Прочее"))*@
+            @*                {*@
+            @*            <div class="panel panel-default">*@
+            @*                <div class="panel-heading">*@
+            @*                    <h4 class="panel-title">*@
+            @*                        $1$                                <a data-toggle="collapse" href="#@category.Name">@category.Name</a>#1#*@
+            @*                        <a data-toggle="collapse" href="#">Name</a>*@
+            @*                    </h4>*@
+            @*                </div>*@
+            @*                $1$                        <div id="@category.Name" class="panel-collapse collapse in">#1#*@
+            @*                <div id="Name" class="panel-collapse collapse in">*@
+            @*                    <div class="panel-body">*@
+            @*                        $1$                                @{#1#*@
+            @*                        $1$                                    foreach (var tag in category.Tags)#1#*@
+            @*                        $1$                                    {#1#*@
+            @*                        *@
+            @*                            <p>geyrn 1</p>*@
+            @*                            <p>geyrn 1</p>*@
+            @*                            <p>geyrn 2</p>*@
+            @*                        *@
+            @**@
+            @**@
+            @*                    </div>*@
+            @*$1$                    }#1#*@
+            @*$1$                    }#1#*@
+            @**@
+            @*                </div>*@
+            @*            </div>*@
+
+            @*                }*@
+            @*            }*@
+
+            <div class="panel-group">
+                <div class="panel panel-default">
+
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" href="#collapse1">Module 1</a>
+                        </h4>
+                    </div>
+                    <div id="collapse1" class="panel-collapse collapse">
+                        <ul class="list-group">
+                            <li class="list-group-item">One</li>
+                            <li class="list-group-item">Two</li>
+                            <li class="list-group-item">Three</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-group">
+                <div class="panel panel-default">
+
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" href="#collapse2">Module 2</a>
+                        </h4>
+                    </div>
+                    <div id="collapse2" class="panel-collapse collapse">
+                        <ul class="list-group">
+                            <li class="list-group-item">1</li>
+                            <li class="list-group-item">2</li>
+                            <li class="list-group-item">3</li>
+                        </ul>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
