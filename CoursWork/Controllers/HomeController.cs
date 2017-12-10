@@ -18,19 +18,12 @@ namespace CoursWork.Controllers
             db = context;
         }
 
-        [Authorize(Roles = "admin, user")]
         public IActionResult Index()
         {
             //string role = User.FindFirst(x => x.Type == ClaimsIdentity.DefaultRoleClaimType).Value;
             //return Content($"ваша роль: {role}");
-           foreach(var role in db.Roles)
-            {
-                db.Entry(role).Collection(b => b.Users).Load();
-                var users = role.Users;
-            }
             return View();
         }
-        [Authorize(Roles = "admin")]
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";

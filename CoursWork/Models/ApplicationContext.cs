@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CoursWork.Models;
 
 namespace CoursWork.Models
 {
@@ -31,7 +32,9 @@ namespace CoursWork.Models
         {
             modelBuilder.Entity<UserCourse>().HasKey(u => new { u.IdUser, u.IdCouse });
             modelBuilder.Entity<UserTheory>().HasKey(u => new { u.IdUser, u.IdTheory });
-            modelBuilder.Entity<UserTestResults>().HasKey(u => new { u.IdUser, u.IdTestResults });
+            modelBuilder.Entity<UserTestResults>().HasKey(u => new { u.IdUser, u.IdTestResults, u.IdTest });
         }
+
+        public DbSet<CoursWork.Models.UserTheory> UserTheory { get; set; }
     }
 }

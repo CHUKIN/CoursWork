@@ -24,8 +24,8 @@ namespace CoursWork.Controllers
         {
            if (!_context.Roles.Any())
            {
-               string adminRoleName = "admin";
-               string userRoleName = "user";
+               string adminRoleName = "Admin";
+               string userRoleName = "User";
 
                string adminEmail = "admin@mail.ru";
                string adminPassword = "123456";

@@ -13,6 +13,9 @@ namespace CoursWork.Models
         public int IdTestResults { get; set; }
         public TestResults TestResults { get; set; }
 
+        public int IdTest { get; set; }
+        public Test Test { get; set; }
+
         public bool Finished { get; set; }
     }
 }
