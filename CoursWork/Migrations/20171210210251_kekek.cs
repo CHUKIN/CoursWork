@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace CoursWork.Migrations
 {
-    public partial class init : Migration
+    public partial class kekek : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

@@ -11,8 +11,8 @@ using System;
 namespace CoursWork.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20171210174938_init")]
-    partial class init
+    [Migration("20171210210251_kekek")]
+    partial class kekek
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
