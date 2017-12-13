@@ -6,29 +6,92 @@
 
 <h2>SelectUser</h2>
 
+<script>
+    function selectComp(index) {
+        var select = $("#Select" + index);
 
-@{ 
-<table>
-    <thead>
-        <tr>
-            <th>Компетенция</th>
-            <th>Норма</th>
-            <th>Фактическое значение</th>
-            <th>Вес</th>
-            <th>Индекс KPI</th>
-        </tr>
-    </thead>
-    <tbody>
-        @for(var i=0;i< (int)ViewBag.AllCount;i++)
-        {
-        <tr>
-            <td>@i</td>
-            <td>@i</td>
-            <td>@i</td>
-            <td>@i</td>
-            <td>@i</td>
-        </tr>
+        var idComp = select.val();
+
+        $.get('Competence', { id: idComp }, function (data) {
+            if (data != null) {
+                $('#Norm' + index).val(data.norm);
+            }
+            else {
+                $('#Norm' + index).val(0);
+            }
+        });
+    }
+
+    function Calculate() {
+        var count = @((int)ViewBag.AllCount);
+        var summ = 0;
+        for (var i = 0; i < count; i++) {
+            var norm = $("#Norm" + i).val();
+            if (norm != "" && norm!=0) {
+
+                var fact = $("#Fact" + i).val();
+                var weight = $("#Weight" + i).val();
+                var result = (weight * fact) / norm * 100;
+                summ += result;
+                $("#Index" + i).val(result);
+            }
+           
         }
-    </tbody>
-</table>
+        $("#Index" + count).val(summ);
+
+        $.post('CompetenceEnd', {
+            comment: $("#Comment").val(),
+            result: summ,
+            userId: @Model.Id
+        }, function (data) {
+           
+        });
+    }
+</script>
+
+@{
+    <table>
+        <thead>
+            <tr>
+                <th>Компетенция</th>
+                <th>Норма</th>
+                <th>Фактическое значение</th>
+                <th>Вес</th>
+                <th>Индекс KPI</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (var i = 0; i < (int)ViewBag.AllCount; i++)
+            {
+                <tr>
+                    <td>
+                        <select id="Select@(i)" onchange="selectComp(@i)">
+                            @{
+                                <option></option>
+                                foreach (var comp in Model.Position.Competences)
+                                {
+                                    <option value="@comp.Id">@comp.Name</option>
+                                }
+                            }
+                        </select>
+                    </td>
+                    <td>
+                        <input id="Norm@(i)" readonly type="number" />
+                    </td>
+                    <td>
+                        <input id="Fact@(i)" type="number" />
+                    </td>
+                    <td>
+                        <input id="Weight@(i)" type="number" />
+                    </td>
+                    <td>
+                        <input id="Index@(i)" readonly type="number" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button onclick="Calculate()">Посчитать</button>
+    <input id="Index@((int)ViewBag.AllCount)" readonly type="number" />
+    <input id="Comment"  type="text" />
 }

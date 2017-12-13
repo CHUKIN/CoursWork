@@ -11,8 +11,8 @@ using System;
 namespace CoursWork.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20171210174938_init")]
-    partial class init
+    [Migration("20171213224853_changeKpi")]
+    partial class changeKpi
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -78,7 +78,7 @@ namespace CoursWork.Migrations
 
                     b.Property<DateTime>("Date");
 
-                    b.Property<int>("Result");
+                    b.Property<double>("Result");
 
                     b.Property<int>("UserId");
 

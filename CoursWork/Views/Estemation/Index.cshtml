@@ -22,14 +22,20 @@
             <select class="form-control" name="count">
                 @{
                     int AllCount = 0;
+                    int max = 0;
                     foreach (var user in Model)
                     {
                         foreach (var compenetces in user.Position.Competences)
                         {
                             AllCount++;
                         }
+                        if(max<AllCount)
+                        {
+                            max = AllCount;
+
+                        }
                     }
-                    for (var i = 1; i <= AllCount; i++)
+                    for (var i = 1; i <= max; i++)
                     {
 
                         <option value="@i">@i</option>

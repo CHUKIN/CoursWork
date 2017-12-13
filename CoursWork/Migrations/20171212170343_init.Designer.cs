@@ -11,9 +11,10 @@ using System;
 namespace CoursWork.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20171212170343_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,7 +78,7 @@ namespace CoursWork.Migrations
 
                     b.Property<DateTime>("Date");
 
-                    b.Property<double>("Result");
+                    b.Property<int>("Result");
 
                     b.Property<int>("UserId");
 

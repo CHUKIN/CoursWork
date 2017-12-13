@@ -45,5 +45,26 @@ namespace CoursWork.Controllers
 
             return View(user);
         }
+
+        public IActionResult Competence(int id)
+        {
+            return Json(db.Competences.Find(id));
+        }
+
+        [HttpPost]
+        public IActionResult CompetenceEnd(string comment, double result, int userId)
+        {
+            var user = db.Users.Find(userId);
+            var kpiResult = new KpiResult
+            {
+                Date = DateTime.Now,
+                Comment = comment,
+                Result = result,
+                User = user
+            };
+            db.KpiResults.Add(kpiResult);
+            db.SaveChanges();
+            return Content("Успешно");
+        }
     }
 }
