@@ -17,7 +17,7 @@ namespace CoursWork.Controllers
         public AccountController(ApplicationContext context)
         {
             _context = context;
-            //DatabaseInitialize(); // добавляем пользователя и роли в бд   
+            DatabaseInitialize(); // добавляем пользователя и роли в бд   
         }
 
         private void DatabaseInitialize()
@@ -28,17 +28,23 @@ namespace CoursWork.Controllers
                string userRoleName = "User";
 
                string adminLogin = "admin";
-               string adminPassword = "123456";
+               string adminPassword = "admin";
 
                // добавляем роли
                Role adminRole = new Role { Name = adminRoleName };
                Role userRole = new Role { Name = userRoleName };
 
+                var department =  new Departament {Name="admin"};
+                _context.Departaments.Add(department);
+
+                var position = new Position {Name ="Admin", Departament = department};
+                _context.Positions.Add(position);
+
                _context.Roles.Add(userRole);
                _context.Roles.Add(adminRole);
 
                // добавляем администратора
-               _context.Users.Add(new User { Login = adminLogin, Password = adminPassword, Role = adminRole });
+               _context.Users.Add(new User { Login = adminLogin, Password = adminPassword, Role = adminRole, Position=position });
 
                _context.SaveChanges();
            }
